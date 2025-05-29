@@ -2,9 +2,9 @@ POST http://localhost:3232/empregados
 Content-type: application/json
 
 {
-    "nome": "Claytin",
-    "idade": 19,
-    "cargo": "Analista de suporte"
+    "nome": "Victor bolinha",
+    "idade": 21,
+    "cargo": "Analista de Segurançaa"
 }
 
 
@@ -19,9 +19,9 @@ PUT http://localhost:3232/empregados/
 Content-type: application/json
 
 {
-    "nome": "",
-    "idade": "",
-    "cargo": ""
+    "nome": " ",
+    "idade": " ",
+    "cargo": " "
 }
 
 ###
