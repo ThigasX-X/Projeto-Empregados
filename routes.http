@@ -1,0 +1,30 @@
+POST http://localhost:3232/empregados
+Content-type: application/json
+
+{
+    "nome": "Claytin",
+    "idade": 19,
+    "cargo": "Analista de suporte"
+}
+
+
+###
+
+GET http://localhost:3232/empregados?search=
+
+
+###
+
+PUT http://localhost:3232/empregados/
+Content-type: application/json
+
+{
+    "nome": "",
+    "idade": "",
+    "cargo": ""
+}
+
+###
+
+
+DELETE http://localhost:3232/empregados/

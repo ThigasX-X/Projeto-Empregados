@@ -1,0 +1,38 @@
+services:
+  app: 
+    build: . 
+    command: ["npm", "run", "dev"]
+    ports:
+      - "3232:3232"
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules 
+    environment: 
+      - DB_HOST=db 
+      - DB_USER=root 
+      - DB_PASSWORD=Tigas@133556 
+      - DB_NAME=projeto_node 
+      - NODE_ENV=development
+    depends_on: 
+      - db
+    networks: 
+      - app-network
+
+  db: 
+    image: mysql:8.0 
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=Tigas@133556 
+      - MYSQL_DATABASE=projeto_node 
+    volumes:
+      - mysql_data:/var/lib/mysql 
+    networks:
+      - app-network
+
+volumes: 
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge
