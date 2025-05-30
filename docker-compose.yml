@@ -8,13 +8,14 @@ services:
       - .:/usr/app
       - /usr/app/node_modules 
     environment: 
-      - DB_HOST=db 
-      - DB_USER=root 
-      - DB_PASSWORD=Tigas@133556 
-      - DB_NAME=projeto_node 
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=Tigas@133556
+      - DB_NAME=projeto_node
       - NODE_ENV=development
     depends_on: 
-      - db
+      db: 
+        condition: service_healthy
     networks: 
       - app-network
 
@@ -29,7 +30,12 @@ services:
       - mysql_data:/var/lib/mysql 
     networks:
       - app-network
-
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-P", "3306", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 volumes: 
   mysql_data:
 
