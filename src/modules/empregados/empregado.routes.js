@@ -5,6 +5,7 @@ async function empregadoRoutes(server, options) {
     server.post('/empregados', controller.criarEmpregado)
     server.put('/empregados/:id', controller.atualizarEmpregado)
     server.delete('/empregados/:id', controller.deletarEmpregado)
+    server.get ('/empregados/:id', controller.buscarEmpregadoId)
 }
 
 export default empregadoRoutes
