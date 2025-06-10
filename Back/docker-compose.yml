@@ -1,0 +1,45 @@
+services:
+  app: 
+    build: . 
+    command: ["npm", "run", "dev"]
+    ports:
+      - "3232:3232"
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules 
+    environment: 
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=Tigas@133556
+      - DB_NAME=projeto_node
+      - NODE_ENV=development
+    depends_on: 
+      db: 
+        condition: service_healthy
+    networks: 
+      - app-network
+
+  db: 
+    image: mysql:8.0 
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=Tigas@133556 
+      - MYSQL_DATABASE=projeto_node 
+    volumes:
+      - mysql_data:/var/lib/mysql 
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+volumes: 
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge
