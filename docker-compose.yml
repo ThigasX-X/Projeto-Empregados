@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db_projeto
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Tigas@133556
+      MYSQL_DATABASE: projeto_node
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./Back/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  backend:
+    build:
+      context: ./Back
+    container_name: backend_app_projeto
+    restart: always
+    environment:
+      DB_HOST: db
+      DB_DATABASE: projeto_node
+      DB_ROOT_PASSWORD: Tigas@133556
+    ports:
+      - "3232:3232"
+    volumes:
+      - ./Back:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./Front
+    container_name: frontend_app_projeto
+    restart: always
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Front:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+
+networks:
+  app-network:
+    driver: bridge
