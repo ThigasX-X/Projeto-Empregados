@@ -14,9 +14,17 @@ export async function buscarId(id) {
 }
 
 export async function criarEmpregado(dadosEmpregado) {
-    const { nome, idade, cargo } = dadosEmpregado
-    if (!nome || idade === undefined || !cargo) {
-        const error = new Error('Nome, idade e cargo são obrigatórios.')
+    const { cpf, nome, idade, cargo } = dadosEmpregado
+
+    const empregadoExistente = await repository.findByCpf(cpf)
+    if (empregadoExistente) {
+        const error = new Error('CPF já cadastrado no sistema.')
+        error.statusCode = 409
+        throw error;
+    }
+    
+    if (!cpf || !nome || idade === undefined || !cargo) {
+        const error = new Error('CPF , nome, idade e cargo são obrigatórios.')
         error.statusCode = 400
         throw error
     }

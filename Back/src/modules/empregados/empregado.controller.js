@@ -26,7 +26,7 @@ export async function criarEmpregado(request, reply) {
     try {
         const novoEmpregado = await service.criarEmpregado(request.body)
         reply.status(201).send(novoEmpregado)
-    } catch {
+    } catch (error) {
         request.log.error({ msg: 'Erro no controller ao criar empregados', err: error })
         reply.status(error.statusCode || 500).send({ message: error.message || 'Erro interno ao criar dados' })
     }
