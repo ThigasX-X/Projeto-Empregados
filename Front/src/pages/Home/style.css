@@ -1,121 +1,151 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #333;
-    overflow-x: hidden;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #333;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+input,
+button {
+  font-family: inherit;
 }
 
 .container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 100px;
-    overflow-x: hidden;
-    box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 100px 20px;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 h1 {
-    color: #fff;
-    font-size: 32px;
-    text-align: center;
+  color: #fff;
+  font-size: 32px;
+  text-align: center;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #131111;
-    max-width: 400px;
-    width: 90%;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #131111;
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 40px;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-form button {
-    border-radius: 30px;
-    background-color: #302d2d;
-    height: 40px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    color: #fff;
-    transition: opacity 0.3s ease;
-}
-
-form button:hover {
-    opacity: 0.5;
+form input,
+.form-buttons button {
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid #413b3b;
+  outline: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 
 form input {
-    border: 1px solid #413b3b;
-    border-radius: 30px;
-    height: 40px;
-    background-color: #141414;
-    color: #fff;
-    font-size: 16px;
-    padding-left: 10px;
-    outline: none;
+  background-color: #141414;
+  color: #fff;
+  padding: 0 15px;
 }
 
 form input:focus {
-    border-color: #4a4a4b;
-    box-shadow: 0 0 8px #a1a1a1;
+  border-color: #949494;
+  box-shadow: 0 0 8px #949494;
 }
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.form-buttons button {
+  flex: 1;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  background-color: #3d3d3d;
+}
+
+.form-buttons button:hover {
+  background-color: #252525;
+}
+
+.form-buttons .cancel-button {
+  background-color: transparent;
+  border: 1px solid #555;
+}
+
+.form-buttons .cancel-button:hover {
+  background-color: #555;
+}
+
 
 .empregados {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #131111;
-    margin: 10px;
-    padding: 10px;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.empregados-actions {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #131111;
+  margin: 8px 0;
+  padding: 15px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .empregados:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .empregados p {
-    color: #fff;
-    font-weight: bold;
+  margin: 4px 0;
+  color: #fff;
+  font-weight: bold;
 }
 
 .empregados span {
-    font-weight: normal;
+  font-weight: normal;
+  color: #ccc;
 }
 
-.empregados button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+.empregados-actions {
+  display: flex;
+  gap: 10px;
 }
 
-.empregados button img {
-    width: 32px;
-    height: 32px;
+.empregados-actions button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 22px;
+  color: #535353;
 }
 
+.empregados-actions button:hover {
+  background-color: #302d2d;
 
-.empregados button:hover {
-    opacity: 0.5;
 }
