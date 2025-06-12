@@ -1,4 +1,5 @@
 import * as repository from './empregado.repository.js'
+import { cpf as cpfValidator } from 'cpf-cnpj-validator'
 
 export async function listarEmpregados(searchAll) {
     return await repository.searchAll(searchAll)
@@ -16,13 +17,19 @@ export async function buscarId(id) {
 export async function criarEmpregado(dadosEmpregado) {
     const { cpf, nome, idade, cargo } = dadosEmpregado
 
+    if (!cpfValidator.isValid(cpf)) {
+        const error = new Error('O CPF informado é inválido.')
+        error.statusCode = 400
+        throw error
+    }
+
     const empregadoExistente = await repository.findByCpf(cpf)
     if (empregadoExistente) {
         const error = new Error('CPF já cadastrado no sistema.')
         error.statusCode = 409
         throw error;
     }
-    
+
     if (!cpf || !nome || idade === undefined || !cargo) {
         const error = new Error('CPF , nome, idade e cargo são obrigatórios.')
         error.statusCode = 400
@@ -32,7 +39,12 @@ export async function criarEmpregado(dadosEmpregado) {
 }
 
 export async function atualizarEmpregado(id, dadosEmpregado) {
-    const { nome, idade, cargo } = dadosEmpregado
+    const { cpf, nome, idade, cargo } = dadosEmpregado
+    if (!cpfValidator.isValid(dadosEmpregado.cpf)) {
+        const error = new Error('O CPF informado é inválido.');
+        error.statusCode = 400;
+        throw error;
+    }
     if (!nome || idade === undefined || !cargo) {
         const error = new Error('Nome, idade e cargo são obrigatórios para atualização.')
         error.statusCode = 400

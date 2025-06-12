@@ -3,10 +3,12 @@ import api from '../../services/api'
 import { IMaskInput } from 'react-imask'
 import { FaPencilAlt, FaTrash } from 'react-icons/fa'
 import { useEffect, useState, useRef } from 'react'
+import { cpf as cpfValidator } from  'cpf-cnpj-validator'
 import ConfirmationModal from '../../components/confirmationModal'
 
 function Home() {
   const [cpf, setCpf] = useState('')
+  const [cpfError, setCpfError] = useState('')
   const [empregados, setEmpragados] = useState([])
   const [idEmEdicao, setIdEmEdicao] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -47,6 +49,15 @@ function Home() {
       }
     }
   }
+
+  const CpfBlur = () => {
+    if (cpf && !cpfValidator.isValid(cpf)) {
+      setCpfError('CPF inválido')
+    } else {
+      setCpfError('')
+    }
+  }
+
   function empregadoEdit(empregado) {
 
     setCpf(empregado.cpf)
@@ -67,6 +78,11 @@ function Home() {
 
   function empregadoSubmit(event) {
     event.preventDefault();
+
+    if (cpf && !cpfValidator.isValid(cpf)) {
+      setCpfError('CPF inválido. Por favor, corrija antes de continuar')
+      return
+    }
     if (idEmEdicao) {
       updateEmpregado()
     } else {
@@ -132,11 +148,11 @@ function Home() {
           <h1>
             {idEmEdicao ? 'Atualizar Empregado' : 'Cadastrar Empregado'}
           </h1>
-          <IMaskInput mask="000.000.000-00" value={cpf} onAccept={(value) => setCpf(value)} placeholder="CPF" />
+          <IMaskInput mask="000.000.000-00" value={cpf} onAccept={(value) => setCpf(value)} onBlur={CpfBlur} placeholder="CPF" />
+          {cpfError && <p className='error-message'>{cpfError}</p>}
           <input placeholder='Nome' name='Nome' type='text' ref={inputNome} />
           <input placeholder='Idade' idade='Idade' type='number' ref={inputIdade} />
           <input placeholder='Cargo' cargo='Cargo' type='text' ref={inputCargo} />
-
           <div className='form-buttons'>
             <button type='submit'>
               {idEmEdicao ? 'Atualizar' : 'Cadastrar'}
